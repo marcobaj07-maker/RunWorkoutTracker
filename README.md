@@ -1,2 +1,10 @@
 # RunWorkoutTracker
-A java command line tool that reads/writes running workouts to a csv file. It suggests a workout for the day based on recent workout history.
+MPV: A java command line tool that reads/writes running workouts to a csv file. It suggests a workout for the day based on recent workout history, and updates the csv file when the user chooses a workout.
+
+The purpose is to solve the issue of not knowing what workout I should do or want to do based on what I've done recently. This will make the decision for me and help me stay balanced.
+
+Future plans are to add a weather tracker, a real-world map for suggesting an actual route near you for any given workout, and the ability to pull data about any upcoming races that the user might want to check out. More future plans are to add a "daily-feel" or soreness meter along with a difficulty rating for different workouts so that the daily workout suggestions can better reflect the user's actual current condition, and whether or not they should do an easy, medium, or hard run. Also, I'd like to make the program able to make its own suggestions for how long or fast a certain workout should be run, rather than just regurgitating given workouts exactly. I want to add the ability for the user to specify which, if any, workouts are liked or disliked and make those suggested more or less frequently accordingly. I also want to implement a suggestion for warm up and cooldown streches & exercises that are specific to the workout chosen that day.
+
+These are all far future plans and will not be implemented by the time I submit this as my final project. I actually really plan to use this and plan to implement all of these ideas eventually, since I love to run and I think it'll be helpful.
+
+Tech stack: I'm going to do this in java, and I'll most likely just need the java.io.BufferedReader, java.io.PrintWriter, java.io.IOException, and java.time.LocalDate libraries. I'll use a csv file because all this program should need to do is read/write text, and the tabular format that can be done with a csv file makes sense for a list of several workouts and a count of how many each has been done.
