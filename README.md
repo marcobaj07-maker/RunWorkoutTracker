@@ -1,5 +1,5 @@
 # RunWorkoutTracker
-MPV: A java command line tool that reads/writes running workouts to a csv file. It suggests a workout for the day based on recent workout history, and updates the csv file when the user chooses a workout.
+MVP: A java command line tool that reads/writes running workouts to a csv file. It suggests a workout for the day based on recent workout history, and updates the csv file when the user chooses a workout.
 
 The purpose is to solve the issue of not knowing what workout I should do or want to do based on what I've done recently. This will make the decision for me and help me stay balanced.
 
