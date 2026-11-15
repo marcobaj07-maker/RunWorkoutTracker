@@ -21,10 +21,25 @@ import java.time.LocalDate;
 public class RunWorkoutTracker {
     public static void main(String[] args) {
         try (BufferedReader br = new BufferedReader(new FileReader("workouts.csv"))) {
-            String[] info = br.readLine().split(",");
-            String text = info[0];
-            int count = Integer.parseInt(info[1]);
-            System.out.println("workouts.csv says " + text + " " + count + " time(s)");
+            String line = br.readLine();
+            ArrayList<String> lines = new ArrayList<>();
+            while (line != null) {
+                lines.add(line);
+                line = br.readLine();
+            }
+            for (String l : lines) {
+                String[] info = l.split(",");
+                String text = info[0];
+                int count = Integer.parseInt(info[1]);
+                System.out.println("workouts.csv says " + text + " " + count + " time(s)");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try (PrintWriter pw = new PrintWriter(new FileWriter("workouts.csv", true), true)) {
+            String response = IO.readln("What do you want to write to the file? ");
+            String times = IO.readln("How many times? ");
+            pw.println(response + "," + times);
         } catch (IOException e) {
             e.printStackTrace();
         }
