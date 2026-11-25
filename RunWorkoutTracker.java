@@ -20,7 +20,7 @@ import java.time.LocalDate;
  */
 public class RunWorkoutTracker {
     public static void main(String[] args) {
-        ArrayList<String> workoutData = new ArrayList();
+        ArrayList<String> workoutData = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("workouts.csv"))) {
             String line = br.readLine();
             ArrayList<String> lines = new ArrayList<>();
