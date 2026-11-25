@@ -20,55 +20,49 @@ import java.time.LocalDate;
  */
 public class RunWorkoutTracker {
     public static void main(String[] args) {
-        ArrayList<String> workoutData = new ArrayList<>();
+        ArrayList<String> workouts = new ArrayList<>();
+        ArrayList<String> lines = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("workouts.csv"))) {
             String line = br.readLine();
-            ArrayList<String> lines = new ArrayList<>();
             while (line != null) {
                 lines.add(line);
                 line = br.readLine();
             }
             for (String l : lines) {
                 String[] info = l.split(",");
-                String workout = info[0];
-                workoutData.add(workout);
-                int weekCount = Integer.parseInt(info[1]);
-                int twoWeekCount = Integer.parseInt(info[2]);
-                int monthCount = Integer.parseInt(info[3]);
-                workoutData.add(String.valueOf(weekCount));
-                workoutData.add(String.valueOf(twoWeekCount));
-                workoutData.add(String.valueOf(monthCount));
-                System.out.println("workouts.csv says " + workout + " was done " + 
-                    weekCount + " times in the last week, " + 
-                    twoWeekCount + " times in the last two weeks, and " + 
-                    monthCount + " times in the last month.");
+                Workout w = new Workout(info[0]);
+                for (int i = 1; i < info.length; i++) {
+                    w.addWorkoutDay(info[i]);
+                }
+                w.recalculate();
+                workouts.add(w.getName());
+                System.out.println("You've done " + w.getName() + " " + w.getWeekCount() + " times in the last week, " +
+                    " " + w.getTwoWeekCount() + " times in the last two weeks, and" +
+                    " " + w.getMonthCount() + " times in the last month");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         try (PrintWriter pw = new PrintWriter(new FileWriter("workouts.csv"), true)) {
-            String response = IO.readln("What workout do you want to do today?");
-            for (int i = 0; i < workoutData.size(); i++) {
-                if (response.equals(workoutData.get(i))) {
-                    int weekCount = Integer.parseInt(workoutData.get(i + 1));
-                    int twoWeekCount = Integer.parseInt(workoutData.get(i + 2));
-                    int monthCount = Integer.parseInt(workoutData.get(i + 3));
-                    weekCount++;
-                    twoWeekCount++;
-                    monthCount++;
-                    System.out.println(response + " chosen, have fun!");
-                    workoutData.set(i + 1, String.valueOf(weekCount));
-                    workoutData.set(i + 2, String.valueOf(twoWeekCount));
-                    workoutData.set(i + 3, String.valueOf(monthCount));
+            boolean found = false;
+            String response = IO.readln("What workout do you want to do today?\n");
+            while (!found) {
+                for (int i = 0; i < workouts.size(); i++) {
+                    if (response.equals(workouts.get(i))) {
+                        System.out.println(response + " chosen, have fun!");
+                        lines.set(i, lines.get(i) + "," + LocalDate.now());
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) {
                     break;
                 }
+                System.out.println("Invalid Choice, try again.");
+                response = IO.readln("What workout do you want to do today?\n");
             }
-            for (int i = 0; i < workoutData.size(); i+=4) {
-                String line = workoutData.get(i) + "," +
-                    workoutData.get(i + 1) + "," +
-                    workoutData.get(i + 2) + "," +
-                    workoutData.get(i + 3);
-                pw.println(line);
+            for (String l : lines) {
+                pw.println(l);
             }
         } catch (IOException e) {
             e.printStackTrace();

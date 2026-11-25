@@ -10,7 +10,10 @@ public class Workout {
 
     public Workout(String name) {
         this.name = name;
-        this.workoutDays = null;
+        this.workoutDays = new ArrayList<>();
+        this.weekWorkouts = new ArrayList<>();
+        this.twoWeekWorkouts = new ArrayList<>();
+        this.monthWorkouts = new ArrayList<>();
     }
 
     public String getName() {
@@ -25,6 +28,7 @@ public class Workout {
     // based on when they were done. If any workout is older than a month, it gets removed.
     public void recalculate() {
         LocalDate today = LocalDate.now();
+        ArrayList<LocalDate> oldWorkouts = new ArrayList<>();
         for (LocalDate l : workoutDays) {
             int daysAgo = (int) (today.toEpochDay() - l.toEpochDay());
             if (daysAgo < 7) {
@@ -37,8 +41,23 @@ public class Workout {
             } else if (daysAgo < 31) {
                 monthWorkouts.add(l);
             } else {
-                workoutDays.remove(l);
+                oldWorkouts.add(l);
             }
         }
+        for (LocalDate old : oldWorkouts) {
+            workoutDays.remove(old);
+        }
+    }
+
+    public int getWeekCount() {
+        return weekWorkouts.size();
+    }
+
+    public int getTwoWeekCount() {
+        return twoWeekWorkouts.size();
+    }
+
+    public int getMonthCount() {
+        return monthWorkouts.size();
     }
 }
